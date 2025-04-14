@@ -39,6 +39,7 @@ stages {
                 steps {
                     script {
                     sh '''
+                    docker rm Movie
                     docker run -d -p 8001:8000 --name Movie $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG
                     sleep 10
                     docker stop Movie
@@ -52,6 +53,7 @@ stages {
                 steps {
                     script {
                     sh '''
+                    docker rm Cast
                     docker run -d -p 8002:8000 --name Cast $DOCKER_ID/$DOCKER_IMAGE2:$DOCKER_TAG
                     sleep 10
                     docker stop Cast
