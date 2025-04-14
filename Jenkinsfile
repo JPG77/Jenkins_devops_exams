@@ -3,6 +3,7 @@ environment { // Declaration of environment variables
 DOCKER_ID = "jpg1" // replace this with your docker-id
 DOCKER_IMAGE = "movie"
 DOCKER_IMAGE2 = "cast"
+PROJET_HOME = "/home/ubuntu/jenkins/Jenkins_devops_exams"
 
 DOCKER_TAG = "v.${BUILD_ID}.0" // we will tag our images with the current build in order to increment the value by 1 with each new build
 }
@@ -25,6 +26,7 @@ stages {
             steps {
                 script {
                 sh '''
+                 cd cast-service
                  #docker rm -f TAGCastNAME
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG .
                 sleep 6
