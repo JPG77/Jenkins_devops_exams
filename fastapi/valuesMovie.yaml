@@ -14,7 +14,14 @@ image:
   tag: 
 
   command: [ "sh", "-c" ]
-  args: [ "uvicorn main:app --reload --host 0.0.0.0" ]
+  args: [ "uvicorn main:app --reload --host 0.0.0.0 --port 8000" ]
+
+
+  # set des ports
+ports:
+  - containerPort: 8000
+    # hostPort: 30000
+
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
