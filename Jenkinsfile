@@ -125,11 +125,11 @@ stage('Deploiement en dev'){
                 cat $KUBECONFIG > .kube/config
                 cp fastapi/valuesMovie.yaml values.yml
                 cat values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yaml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install movie fastapi --values=values.yml --namespace dev
                 cp fastapi/valuesCast.yaml values.yml
                 cat values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yaml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install cast fastapi --values=values.yml --namespace dev
                 '''
                 }
