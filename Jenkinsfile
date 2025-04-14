@@ -175,3 +175,4 @@ stage('Deploiement en staging'){
 
 }
 }
+}
