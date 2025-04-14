@@ -13,7 +13,7 @@ stages {
                 script {
                 sh '''
                  cd movie-service
-                 docker rm -f TAGmovieNAME
+                 #docker rm -f TAGmovieNAME
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG .
                 sleep 6
                 cd ..
@@ -25,7 +25,7 @@ stages {
             steps {
                 script {
                 sh '''
-                 docker rm -f TAGCastNAME
+                 #docker rm -f TAGCastNAME
                  docker build -t $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG .
                 sleep 6
                 cd ..
