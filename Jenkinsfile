@@ -33,7 +33,7 @@ stages {
                     }
                 }    
             }
-        stage('Docker run'){ // run container from our MOVIE builded image
+        stage('Docker run.Movie'){ // run container from our MOVIE builded image
                 steps {
                     script {
                     sh '''
@@ -44,7 +44,7 @@ stages {
                 }
             }
 
-        stage('Docker run'){ // run container from our CAST builded image
+        stage('Docker run.Cast'){ // run container from our CAST builded image
                 steps {
                     script {
                     sh '''
