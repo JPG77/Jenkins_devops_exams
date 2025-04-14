@@ -28,7 +28,7 @@ stages {
                 sh '''
                  cd cast-service
                  #docker rm -f TAGCastNAME
-                 docker build -t $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG .
+                 docker build -t $DOCKER_ID/$DOCKER_IMAGE2:$DOCKER_TAG .
                 sleep 6
                 cd ..
                 '''
@@ -50,7 +50,7 @@ stages {
                 steps {
                     script {
                     sh '''
-                    docker run -d -p 8002:8000 --name Cast $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG
+                    docker run -d -p 8002:8000 --name Cast $DOCKER_ID/$DOCKER_IMAGE2:$DOCKER_TAG
                     sleep 10
                     '''
                     }
