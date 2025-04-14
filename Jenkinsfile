@@ -20,7 +20,7 @@ stages {
                 '''
                 }
             }
-
+        }
         stage(' Docker Build.Cast'){ // docker build  CAST image stage
             steps {
                 script {
