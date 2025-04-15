@@ -155,6 +155,8 @@ stage('Deploiement en staging'){
                 cp fastapi/valuesCast.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm uninstall movie -n dev
+                helm uninstall cast -n dev
                 helm upgrade --install cast fastapi --values=values.yml --namespace staging
                 '''
                 }
@@ -175,13 +177,14 @@ stage('Deploiement en QA'){
                 ls
                 cat $KUBECONFIG > .kube/config
                 cp fastapi/valuesMovie.yaml values.yml
-                sudo helm uninstall movie -n dev
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install movie fastapi --values=values.yml --namespace qa
                 cp fastapi/valuesCast.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm uninstall movie -n dev
+                helm uninstall cast -n dev
                 helm upgrade --install cast fastapi --values=values.yml --namespace qa
                 '''
                 }
