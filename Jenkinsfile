@@ -126,6 +126,7 @@ stage('Deploiement en dev'){
                 cp fastapi/valuesMovie.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                /home/ubuntu/jenkins/Jenkins_devops_exams/uninst-dev.sh
                 helm upgrade --install movie fastapi --values=values.yml --namespace dev
                 cp fastapi/valuesCast.yaml values.yml
                 cat values.yml
@@ -155,7 +156,7 @@ stage('Deploiement en QA'){
                 cp fastapi/valuesMovie.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                /home/ubuntu/jenkins/Jenkins_devops_exams/uninst-dev.sh
+                #/home/ubuntu/jenkins/Jenkins_devops_exams/uninst-dev.sh
                 helm upgrade --install movie fastapi --values=values.yml --namespace qa
                 cp fastapi/valuesCast.yaml values.yml
                 cat values.yml
