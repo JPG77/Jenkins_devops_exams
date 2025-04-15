@@ -159,8 +159,33 @@ stage('Deploiement en staging'){
                 '''
                 }
             }
-
         }
+
+stage('Deploiement en QA'){
+        environment
+        {
+        KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
+        }
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                ls
+                cat $KUBECONFIG > .kube/config
+                cp fastapi/valuesMovie.yaml values.yml
+                cat values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm upgrade --install movie fastapi --values=values.yml --namespace qa
+                cp fastapi/valuesCast.yaml values.yml
+                cat values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm upgrade --install cast fastapi --values=values.yml --namespace qa
+                '''
+                }
+            }
+        }
+
   stage('Deploiement en prod'){
         environment
         {
