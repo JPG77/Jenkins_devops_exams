@@ -1,2 +1,2 @@
-helm uninstall movie -n dev
-helm uninstall cast -n dev
+helm uninstall movie -n qua
+helm uninstall cast -n qua
