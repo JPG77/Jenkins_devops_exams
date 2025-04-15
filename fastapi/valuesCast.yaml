@@ -16,26 +16,10 @@ image:
   command: [ "sh", "-c" ]
   args: [ "uvicorn main:app --reload --host 0.0.0.0" ]
 
-persistence:
-  enabled: true
-  name: cast-pvc
-  accessMode: ReadWriteOnce
-  size: 100Mi
-  storageClass: standard
-
-persistentVolume:
-  enabled: true
-  name: cast-pv
-  accessMode: ReadWriteOnce
-  size: 100Mi
-  storageClass: standard
-  reclaimPolicy: Retain
-  volumeMode: Filesystem
-  hostPath: /home/ubuntu/jenkins/Jenkins_devops_exams/cast-service
-
-
-
-
+  #persistence:
+  #enabled: true
+  #hostPath: /home/ubuntu/jenkins/Jenkins_devops_exams/cast-service
+  #mountpath: /app
 
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -129,16 +113,21 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
+volumes: 
+ - name: cast-volume
 #   secret:
 #     secretName: mysecret
 #     optional: false
+   hostPath:
+        path: "/home/ubuntu/jenkins/Jenkins_devops_exams/cast-service"
+
+
+
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
+volumeMounts: 
+ - name: cast-volume
+   mountPath: "/app"
 #   readOnly: true
 
 nodeSelector: {}

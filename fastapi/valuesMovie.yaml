@@ -23,22 +23,11 @@ ports:
     # hostPort: 30000
 
 
-persistence:
-  enabled: true
-  name: movie-pvc
-  accessMode: ReadWriteOnce
-  size: 100Mi
-  storageClass: standard
+    #persistence:
+    #enabled: true
+    #hostPath: /home/ubuntu/jenkins/Jenkins_devops_exams/movie-service
+    #mountpath: /app
 
-persistentVolume:
-  enabled: true
-  name: movie-pv
-  accessMode: ReadWriteOnce
-  size: 100Mi
-  storageClass: standard
-  reclaimPolicy: Retain
-  volumeMode: Filesystem
-  hostPath: /home/ubuntu/jenkins/Jenkins_devops_exams/movie-service
 
 
 
@@ -135,16 +124,18 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
-# - name: foo
+volumes: 
+ - name: movie-volume
 #   secret:
 #     secretName: mysecret
 #     optional: false
+   hostPath:
+        path: "/home/ubuntu/jenkins/Jenkins_devops_exams/movie-service"     
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
+volumeMounts: 
+ - name: movie-volume
+   mountPath: "/app"
 #   readOnly: true
 
 nodeSelector: {}
