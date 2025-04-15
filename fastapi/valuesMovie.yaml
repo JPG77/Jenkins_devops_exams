@@ -23,6 +23,27 @@ ports:
     # hostPort: 30000
 
 
+persistence:
+  enabled: true
+  name: movie-pvc
+  accessMode: ReadWriteOnce
+  size: 100Mi
+  storageClass: standard
+
+persistentVolume:
+  enabled: true
+  name: movie-pv
+  accessMode: ReadWriteOnce
+  size: 100Mi
+  storageClass: standard
+  reclaimPolicy: Retain
+  volumeMode: Filesystem
+  hostPath: /home/ubuntu/jenkins/Jenkins_devops_exams/movie-service
+
+
+
+
+
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # This is to override the chart name.
