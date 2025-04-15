@@ -174,6 +174,7 @@ stage('Deploiement en QA'){
                 ls
                 cat $KUBECONFIG > .kube/config
                 cp fastapi/valuesMovie.yaml values.yml
+                kubectl delete pv movie-fastapi-pv -n dev
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install movie fastapi --values=values.yml --namespace qa
