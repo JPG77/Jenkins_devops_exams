@@ -10,7 +10,7 @@ spec:
 
   accessModes:
     - {{- if .Values.persistence }}
-        {{ .Values.persistence.accessMode }}
+        {{ .Values.persistence.accessMode |  default "ReadWriteOnce" }}
       {{- end }}
 
   persistentVolumeReclaimPolicy: Retain
