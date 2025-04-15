@@ -157,8 +157,8 @@ stage('Deploiement en staging'){
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 echo "uninst movie"
                 helm list -n dev
-                helm uninstall movie -n dev
-                helm uninstall cast -n dev
+                #helm uninstall movie -n dev
+                #helm uninstall cast -n dev
                 helm upgrade --install cast fastapi --values=values.yml --namespace staging
                 '''
                 }
