@@ -136,34 +136,8 @@ stage('Deploiement en dev'){
             }
 
         }
-stage('Deploiement en staging'){
-        environment
-        {
-        KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
-        }
-            steps {
-                script {
-                sh '''
-                rm -Rf .kube
-                mkdir .kube
-                ls
-                cat $KUBECONFIG > .kube/config
-                cp fastapi/valuesMovie.yaml values.yml
-                cat values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                /home/ubuntu/jenkins/Jenkins_devops_exams/uninst-dev.sh
-                cp fastapi/valuesCast.yaml values.yml
-                cat values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                echo "uninst movie"
-                helm list -n dev
-                #helm uninstall movie -n dev
-                #helm uninstall cast -n dev
-                helm upgrade --install cast fastapi --values=values.yml --namespace staging
-                '''
-                }
-            }
-        }
+
+
 
 stage('Deploiement en QA'){
         environment
@@ -192,6 +166,36 @@ stage('Deploiement en QA'){
                 }
             }
         }
+
+stage('Deploiement en staging'){
+        environment
+        {
+        KUBECONFIG = credentials("config") // we retrieve  kubeconfig from secret file called config saved on jenkins
+        }
+            steps {
+                script {
+                sh '''
+                rm -Rf .kube
+                mkdir .kube
+                ls
+                cat $KUBECONFIG > .kube/config
+                cp fastapi/valuesMovie.yaml values.yml
+                cat values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                #/home/ubuntu/jenkins/Jenkins_devops_exams/uninst-dev.sh
+                cp fastapi/valuesCast.yaml values.yml
+                cat values.yml
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                echo "uninst movie"
+                helm list -n dev
+                helm uninstall movie -n qua
+                helm uninstall cast -n qua
+                helm upgrade --install cast fastapi --values=values.yml --namespace staging
+                '''
+                }
+            }
+        }
+
 
   stage('Deploiement en prod'){
         environment
