@@ -4,9 +4,9 @@ metadata:
   name: {{ include "fastapi.fullname" . }}-pvc
 spec:
   accessModes:
-    - {{ .Values.persistence.accessMode }}
+    - {{ .Values.persistence.accessMode |  default "ReadWriteOnce" }}
   resources:
     requests:
       storage: {{ .Values.persistence.size }}
-  storageClassName: {{ .Values.persistence.storageClass  | default "ReadWriteOnce" }}
+  storageClassName: {{ .Values.persistence.storageClass  | default "standard" }}
 
