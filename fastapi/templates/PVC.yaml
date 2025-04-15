@@ -9,6 +9,11 @@ spec:
      {{- end }}   
   resources:
     requests:
-      storage: {{ .Values.persistence.size }}
-  storageClassName: {{ .Values.persistence.storageClass  | default "standard" }}
+      storage:{{- if .Values.persistence }} 
+                 {{ .Values.persistence.size }}
+              {{- end }}
+
+  storageClassName:{{- if .Values.persistence }}
+                      {{ .Values.persistence.storageClass  | default "standard" }}
+                   {{- end }}     
 
