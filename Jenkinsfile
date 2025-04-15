@@ -155,6 +155,7 @@ stage('Deploiement en staging'){
                 cp fastapi/valuesCast.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                echo "uninst movie"
                 helm uninstall movie -n dev
                 helm uninstall cast -n dev
                 helm upgrade --install cast fastapi --values=values.yml --namespace staging
