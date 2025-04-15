@@ -16,6 +16,28 @@ image:
   command: [ "sh", "-c" ]
   args: [ "uvicorn main:app --reload --host 0.0.0.0" ]
 
+persistence:
+  enabled: true
+  name: cast-pvc
+  accessMode: ReadWriteOnce
+  size: 100Mi
+  storageClass: standard
+
+persistentVolume:
+  enabled: true
+  name: cast-pv
+  accessMode: ReadWriteOnce
+  size: 100Mi
+  storageClass: standard
+  reclaimPolicy: Retain
+  volumeMode: Filesystem
+  hostPath: /home/ubuntu/jenkins/Jenkins_devops_exams/cast-service
+
+
+
+
+
+
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
 # This is to override the chart name.
