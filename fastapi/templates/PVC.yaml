@@ -4,16 +4,16 @@ metadata:
   name: {{ include "fastapi.fullname" . }}-pvc
 spec:
   accessModes:
-    -{{- if .Values.persistence }}
+    - {{- if .Values.persistence }}
         {{ .Values.persistence.accessMode |  default "ReadWriteOnce" }}
-     {{- end }}   
+      {{- end }}   
   resources:
     requests:
-      storage:{{- if .Values.persistence }} 
+      storage: {{- if .Values.persistence }} 
                  {{ .Values.persistence.size }}
               {{- end }}
 
-  storageClassName:{{- if .Values.persistence }}
+  storageClassName: {{- if .Values.persistence }}
                       {{ .Values.persistence.storageClass  | default "standard" }}
                    {{- end }}     
 

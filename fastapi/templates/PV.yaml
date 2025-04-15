@@ -4,9 +4,15 @@ metadata:
   name: {{ include "fastapi.fullname" . }}-pv
 spec:
   capacity:
-    storage: {{ .Values.persistence.size }}
+    storage: {{- if .Values.persistence }}
+               {{ .Values.persistence.size }}
+             {{- end }}    
+
   accessModes:
-    - {{ .Values.persistence.accessMode }}
+    - {{- if .Values.persistence }}
+        {{ .Values.persistence.accessMode }}
+      {{- end }}
+
   persistentVolumeReclaimPolicy: Retain
   storageClassName: {{ .Values.persistence.storageClass }}
   hostPath:   # ← à adapter selon ton type de volume
