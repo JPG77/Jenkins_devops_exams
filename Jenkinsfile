@@ -41,7 +41,9 @@ stages {
                     sh '''
                     #docker rm Movie 2>/dev/null
                     docker run -d -p 8003:8000 --name Movie $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG
-                    sleep 10                    
+                    sleep 10
+                    docker stop Movie
+                    docker rm Movie                    
                     '''
                     }
                 }
@@ -53,7 +55,9 @@ stages {
                     sh '''
                     #docker rm Cast 2>/dev/null
                     docker run -d -p 8004:8000 --name Cast $DOCKER_ID/$DOCKER_IMAGE2:$DOCKER_TAG
-                    sleep 10                    
+                    sleep 10
+                    docker stop Cast
+                    docker rm Cast                    
                     '''
                     }
                 }
@@ -63,8 +67,13 @@ stages {
             steps {
                     script {
                     sh '''
-                    curl localhost:8004/api/v1/casts/docs#/
-                    curl localhost:8003/api/v1/movies/docs
+
+                    docker compose -f docker-compose2.yml up
+                    sleep 30 
+                    curl localhost:8001/api/v1/casts/docs#/
+                    curl localhost:8002/api/v1/movies/docs
+                    docker compose -f docker-compose2.yml up
+                    sleep 10
                     docker stop Cast
                     docker rm Cast
                     docker stop Movie
