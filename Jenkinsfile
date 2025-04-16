@@ -142,6 +142,9 @@ stage('Deploiement en dev'){
                 helm upgrade --install nginx fastapi --values=values.yml --namespace dev
                 cp fastapi/values.bdd.movie.yaml values.yml
                 helm upgrade --install bddmovie fastapi --values=values.yml --namespace dev
+                cp fastapi/values.bdd.cast.yaml values.yml
+                helm upgrade --install bddcast fastapi --values=values.yml --namespace dev
+
 
 
                 '''

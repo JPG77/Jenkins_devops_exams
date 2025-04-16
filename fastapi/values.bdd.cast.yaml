@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+ name: castdb
+spec:
+ selector:
+   matchLabels:
+     app: castdb
+ serviceName: castdb
+ replicas: 1
+ template:
+   metadata:
+     labels:
+       app: castdb
+   spec:
+     containers:
+     - name: castdb
+       image: postgres:12.1-alpine
+       ports:
+       - containerPort: 5432
+         name: castdb
+       env:
+       - name: POSTGRES_USER
+         value: cast_db_username
+          
+       - name: POSTGRES_PASSWORD
+         value: cast_db_password
+         
+       - name: POSTGRES_DB
+         value: cast_db_dev
+          
+             
+     volumes:
+        - name: postgres-volume-cast # Nom du volume pour le stockage des données persistantes
+          persistentVolumeClaim:
+              claimName: pvc-postgres-cast # Nom du PVC à utiliser
