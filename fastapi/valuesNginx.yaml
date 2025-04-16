@@ -7,19 +7,17 @@ replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: jpg1/movie
+  repository: nginx
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 
+  tag: latest
 
-command: [ "sh", "-c" ]
-args: [ "uvicorn main:app --reload --host 0.0.0.0 --port 8000" ]
 
 
   # set des ports
 ports:
-  - containerPort: 8000
+  - containerPort: 8081
     # hostPort: 30000
 
 
@@ -74,7 +72,7 @@ service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
-  port: 8000
+  port: 8081
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
@@ -113,7 +111,7 @@ livenessProbe:
 readinessProbe:
   httpGet:
     path: /
-    port: 8000
+    port: 8081
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -125,17 +123,17 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes: 
- - name: movie-volume
+ - name: movie-conf
 #   secret:
 #     secretName: mysecret
 #     optional: false
    hostPath:
-        path: "/home/ubuntu/jenkins/Jenkins_devops_exams/movie-service"     
+        path: "/home/ubuntu/jenkins/Jenkins_devops_exams/nginx_config.conf" 
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: 
- - name: movie-volume
-   mountPath: "/app"
+ - name: ngnixconf.ori
+   mountPath: "/home/ubuntu/jenkins/Jenkins_devops_exams/nginx_config.conf"
 #   readOnly: true
 
 nodeSelector: {}
