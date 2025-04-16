@@ -182,6 +182,10 @@ stage('Deploiement en QA'){
                 helm upgrade --install cast fastapi --values=values.yml --namespace qa
                 cp fastapi/valuesNginx.yaml values.yml
                 helm upgrade --install nginx fastapi --values=values.yml --namespace qa
+                cp fastapi/values.bdd.movie.yaml values.yml
+                helm upgrade --install bddmovie fastapi --values=values.yml --namespace qa
+                cp fastapi/values.bdd.cast.yaml values.yml
+                helm upgrade --install bddcast fastapi --values=values.yml --namespace qa
                 '''
                 }
             }
@@ -214,6 +218,10 @@ stage('Deploiement en staging'){
                 helm upgrade --install cast fastapi --values=values.yml --namespace staging
                 cp fastapi/valuesNginx.yaml values.yml
                 helm upgrade --install nginx fastapi --values=values.yml --namespace staging
+                cp fastapi/values.bdd.movie.yaml values.yml
+                helm upgrade --install bddmovie fastapi --values=values.yml --namespace staging
+                cp fastapi/values.bdd.cast.yaml values.yml
+                helm upgrade --install bddcast fastapi --values=values.yml --namespace staging
                 '''
                 }
             }
@@ -251,6 +259,10 @@ stage('Deploiement en staging'){
                 helm upgrade --install cast fastapi --values=values.yml --namespace prod
                 cp fastapi/valuesNginx.yaml values.yml
                 helm upgrade --install nginx fastapi --values=values.yml --namespace prod
+                helm upgrade --install bddmovie fastapi --values=values.yml --namespace prod
+                cp fastapi/values.bdd.cast.yaml values.yml
+                helm upgrade --install bddcast fastapi --values=values.yml --namespace prod
+                
                 '''
                 }
             }
