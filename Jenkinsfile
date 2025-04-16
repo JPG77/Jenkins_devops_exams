@@ -125,8 +125,7 @@ stage('Deploiement en dev'){
                 cat $KUBECONFIG > .kube/config
                 cp fastapi/valuesMovie.yaml values.yml
                 cat values.yml
-                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
-                #/home/ubuntu/jenkins/Jenkins_devops_exams/uninst-dev.sh
+                sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml                
                 helm upgrade --install movie fastapi --values=values.yml --namespace dev
                 cp fastapi/valuesCast.yaml values.yml
                 cat values.yml
@@ -168,6 +167,8 @@ stage('Deploiement en QA'){
                 #helm uninstall movie -n dev
                 #helm uninstall cast -n dev
                 helm upgrade --install cast fastapi --values=values.yml --namespace qa
+                cp fastapi/valuesNginx.yaml values.yml
+                helm upgrade --install nginx fastapi --values=values.yml --namespace qa
                 '''
                 }
             }
@@ -188,6 +189,7 @@ stage('Deploiement en staging'){
                 cp fastapi/valuesMovie.yaml values.yml
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
+                helm upgrade --install movie fastapi --values=values.yml --namespace staging
                 #/home/ubuntu/jenkins/Jenkins_devops_exams/uninst-dev.sh
                 cp fastapi/valuesCast.yaml values.yml
                 cat values.yml
@@ -197,6 +199,8 @@ stage('Deploiement en staging'){
                 #helm uninstall movie -n qua
                 #helm uninstall cast -n qua
                 helm upgrade --install cast fastapi --values=values.yml --namespace staging
+                cp fastapi/valuesNginx.yaml values.yml
+                helm upgrade --install nginx fastapi --values=values.yml --namespace staging
                 '''
                 }
             }
@@ -232,6 +236,8 @@ stage('Deploiement en staging'){
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install cast fastapi --values=values.yml --namespace prod
+                cp fastapi/valuesNginx.yaml values.yml
+                helm upgrade --install nginx fastapi --values=values.yml --namespace prod
                 '''
                 }
             }
