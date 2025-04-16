@@ -68,8 +68,8 @@ stages {
                     script {
                     sh '''
 
-                    docker compose -f docker-compose2.yml up
-                    sleep 30 
+                    docker compose -f docker-compose2.yml up -d 
+                    sleep 15 
                     curl localhost:8001/api/v1/casts/docs#/
                     curl localhost:8002/api/v1/movies/docs
                     docker compose -f docker-compose2.yml up
