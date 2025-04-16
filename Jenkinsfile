@@ -68,11 +68,11 @@ stages {
                     script {
                     sh '''
 
-                    docker compose -f docker-compose2.yml up -d 
-                    sleep 5 
-                    curl localhost:8002/api/v1/casts/docs#/
-                    curl localhost:8001/api/v1/movies/docs
-                    docker compose stop 
+                   # docker compose -f docker-compose2.yml up -d 
+                   # sleep 5 
+                   # curl localhost:8002/api/v1/casts/docs#/
+                   # curl localhost:8001/api/v1/movies/docs
+                   # docker compose stop 
                                                         
                     
                     '''
@@ -140,6 +140,9 @@ stage('Deploiement en dev'){
                 helm upgrade --install cast fastapi --values=values.yml --namespace dev
                 cp fastapi/valuesNginx.yaml values.yml
                 helm upgrade --install nginx fastapi --values=values.yml --namespace dev
+                cp fastapi/values.bdd.movie.yaml values.yml
+                helm upgrade --install bddmovie fastapi --values=values.yml --namespace dev
+
 
                 '''
                 }

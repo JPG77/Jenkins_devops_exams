@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+ name: moviedb
+spec:
+ selector:
+   matchLabels:
+     app: moviedb
+ serviceName: moviedb
+ replicas: 1
+ template:
+   metadata:
+     labels:
+       app: moviedb
+   spec:
+     containers:
+     - name: moviedb
+       image: postgres:12.1-alpine
+       ports:
+       - containerPort: 5432
+         name: moviedb
+       env:
+       - name: POSTGRES_USER
+         value: movie_db_username
+          
+       - name: POSTGRES_PASSWORD
+         value: movie_db_password
+         
+       - name: POSTGRES_DB
+         value: movie_db_dev
+          
+             
+     volumes:
+        - name: postgres-volume-movie # Nom du volume pour le stockage des données persistantes
+          persistentVolumeClaim:
+              claimName: pvc-postgres-movie # Nom du PVC à utiliser
