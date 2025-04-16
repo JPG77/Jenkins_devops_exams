@@ -132,6 +132,9 @@ stage('Deploiement en dev'){
                 cat values.yml
                 sed -i "s+tag.*+tag: ${DOCKER_TAG}+g" values.yml
                 helm upgrade --install cast fastapi --values=values.yml --namespace dev
+                cp fastapi/valuesNginx.yaml values.yml
+                helm upgrade --install nginx fastapi --values=values.yml --namespace dev
+
                 '''
                 }
             }
