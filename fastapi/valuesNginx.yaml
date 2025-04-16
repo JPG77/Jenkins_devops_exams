@@ -123,7 +123,7 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes: 
-# - name: nginx-conf
+ - name: nginx-conf
 #   secret:
 #     secretName: mysecret
 #     optional: false
@@ -132,8 +132,8 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: 
-# - name: ngnix-conf
-   mountPath: "/home/ubuntu/jenkins/Jenkins_devops_exams/nginx_config.conf"
+ - name: nginx-conf
+   mountPath: "/etc/nginx/conf.d/default.conf"
 #   readOnly: true
 
 nodeSelector: {}
