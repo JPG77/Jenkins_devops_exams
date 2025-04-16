@@ -55,9 +55,7 @@ stages {
                     sh '''
                     #docker rm Cast 2>/dev/null
                     docker run -d -p 8004:8000 --name Cast $DOCKER_ID/$DOCKER_IMAGE2:$DOCKER_TAG
-                    sleep 10
-                    docker stop Cast
-                    docker rm Cast
+                    sleep 10                    
                     '''
                     }
                 }
@@ -67,7 +65,9 @@ stages {
             steps {
                     script {
                     sh '''
-                    curl localhost
+                    curl localhost:8002/api/v1/casts/docs#/
+                    docker stop Cast
+                    docker rm Cast
                     '''
                     }
                  }
